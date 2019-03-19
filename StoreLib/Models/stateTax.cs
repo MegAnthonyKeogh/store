@@ -7,7 +7,7 @@ namespace StoreLib.Models
 {
     public class stateTax
     {
-        public string state { get; set; }
+        public string name { get; set; }
         
         public decimal tax { get; set; }
     }

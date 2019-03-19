@@ -39,12 +39,12 @@ namespace StoreLib.ViewModelComponents
                 Items = new List<OrderProduct>(),
                 Tax = state.tax
             };
-            foreach (var p in Order.Items)
+            foreach (var p in cart.Items)
             {
                 var individualProduct = new OrderProduct()
                 {
                     ProductID = p.ProductID,
-                    QuanityOnHand = p.QuanityOnHand,
+                    QuantityToBuy= p.Quantity,
                     Price = p.Price
                     
 

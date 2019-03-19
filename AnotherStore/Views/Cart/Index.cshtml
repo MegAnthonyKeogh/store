@@ -222,9 +222,7 @@
 
                         , contentType: "application/json"
 
-                        , data: {
-                            state: ko.toJSON(pageModel.states.selectedState())
-                        }
+                        , data: JSON.stringify(pageModel.states.selectedState())
 
                         , complete: function () {
                             window.location = "/checkout";
