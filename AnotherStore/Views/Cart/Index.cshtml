@@ -1,0 +1,241 @@
+﻿
+@model StoreLib.Models.ProductVm[]
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Cart</title>
+        <script type='text/javascript' src='~/Scripts/knockout-3.4.2.js'></script>
+
+    </head>
+    <body>
+
+
+        <h2> Shopping Cart</h2>
+        <hr />
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity in Stock</th>
+                    <th scope="col">Remove</th>
+                    <th scope="col"> Total</th>
+                </tr>
+            </thead>
+            <tbody id="update-products" data-bind="foreach: Products">
+                <tr>
+                    <th scope="row" data-bind="html: ProductId"></th>
+                    <td data-bind="html: Name"></td>
+                    <td data-bind="html: Price"></td>
+                    <td data-bind="html: Quantity"></td>
+                    <td>
+                        <a class="btn btn-danger"
+                           data-bind="click: $root.remove">Remove from Cart</a>
+                    </td>
+                    <td data-bind="html: Total"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="totalTable" class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-right"> Total</th>
+                    <th scope="col" class="text-right"> Total</th>
+
+                </tr>
+            </thead>
+            <tbody id="update-products">
+                <tr>
+                    <td class="text-right"> PreTax total</td>
+                    <td class="text-right" data-bind="html: total"></td>
+                </tr>
+
+                <tr>
+                    <td class="text-right"> Tax</td>
+                    <td class="text-right" data-bind="html: tax "></td>
+                </tr>
+                <tr>
+                    <td class="text-right">Final Total</td>
+                    <td class="text-right" data-bind="html: finalTotal "></td>
+                </tr>
+                <tr>
+                    <td class="text-right"> <a id="checkout" data-bind="visible: Checkout"  class="btn btn-primary" data-toggle="modal" data-target=".bootstrapmodal"> Buy now </a></td>
+                </tr>
+                <tr>
+                    <td class="text-right"> <a class="btn btn-info" data-bind="visible: completeCheckout"> Finish Checkout </a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="modal fade bootstrapmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">
+                                Please select your state for tax and shipping
+                            </label>
+                            <select id="state-select" data-bind="options: states.availablestates,
+                                    optionsText: 'name',
+                                    value: states.selectedState,
+                                    optionsCaption: 'Choose your state' "  class="form-control">
+                               
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="order-confirm" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+
+                        <button type="button" id="closingModal" class="btn btn-danger" data-dismiss="modal"> close &times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        @section scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/knockout")
+            <script type="text/javascript">
+                var pageModel;
+                var state = function(name, tax) {
+                    this.name = name;
+                    this.tax = tax;
+                };
+
+                // gets the data from the data base that has been post to api/cart
+                   $.getJSON("api/cart/", function (data) {
+                    var products = [];
+                    for (var i = 0; i < data.length; i++) {
+                        if (!data[i]) continue;
+                        var model = new ProductsViewModel(data[i]);
+                        products.push(model);
+                       }
+                       //attaching the items to the page model and binding it to the page
+                   pageModel = new PageModel(products);
+                    ko.applyBindings(pageModel, $("body")[0]);
+
+                })
+                // whole page template
+                function PageModel(products) {
+                    var self = this;
+                    self.Products = ko.observableArray(products);
+                    
+                    self.states = {
+                        availablestates:
+                            ko.observableArray([
+                            new state("New Jersey", .07),
+                            new state("Pennsylvania", .08), 
+                            new state("Delaware", .00),
+                            new state("Maryland", .05)
+                        ]),
+                        selectedState: ko.observable()
+                        
+                    }
+                    self.tax = ko.computed(function () {
+                        var tax = 0;
+
+                        if (typeof(self.states.selectedState()) !== "undefined") {
+                            tax = self.states.selectedState().tax;
+                            self.Checkout(false);
+                            self.completeCheckout(true);
+
+                        }
+
+                        return tax;
+                    })
+                            
+                    self.remove = function (product) {
+                        self.Products.remove(product);
+                    }
+                    self.total = ko.computed(function () {
+                        var t = 0;
+                        if (self.Products()) {
+                            for (var i = 0; i < self.Products().length; i++) {
+                                t += self.Products()[i].Price() * self.Products()[i].Quantity();
+                            }        
+                        }
+                        return t;
+                        }, this);
+                self.finalTotal = ko.computed(function () {
+                    t = 0;
+
+                    t = self.total() + (self.total() * self.tax());
+                    return t;
+                    })
+                    self.Checkout = ko.observable(true);
+                    self.completeCheckout = ko.observable(false);
+
+                }
+               
+
+
+                // templating for each item in the cart
+                function ProductsViewModel(data) {
+                    var self = this;
+                    self.Name = ko.observable(data.Name);
+                    self.ProductId = ko.observable(data.ProductID);
+                    self.Price = ko.observable(data.Price);
+
+                    self.Quantity = ko.observable(data.Quantity);
+
+                    self.Total = ko.computed(function () {
+                        var t = self.Price() * self.Quantity();
+                        return t;
+                    })
+
+                    self.remove = function (product) {
+                        alert('test');
+                        //self.Products.remove(product);
+                    }
+                }
+                $(".btn-info").on("click", function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST"
+                        , url: "api/cart/tax"
+                        , headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+
+                        , contentType: "application/json"
+
+                        , data: {
+                            state: ko.toJSON(pageModel.states.selectedState())
+                        }
+
+                        , complete: function () {
+                            window.location = "/checkout";
+                        }
+                    })
+                })
+                
+
+                   // , data: ko.toJSON(self.Products)
+            </script>
+        }
+
+    </body>
+</html>

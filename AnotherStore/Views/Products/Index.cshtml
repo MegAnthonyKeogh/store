@@ -1,0 +1,157 @@
+﻿
+@model StoreLib.Models.ProductVm[]
+
+
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+
+
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Products</title>
+        <script type='text/javascript' src='~/Scripts/knockout-3.4.2.js'></script>
+    </head>
+    <body>
+
+
+        <h2> Products</h2>
+        <hr />
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity in Stock</th>
+                    <th scope="col">Add to Cart</th>
+                </tr>
+            </thead>
+            <tbody id="update-products" data-bind="foreach: Products">
+                <tr>
+                    <th scope="row" data-bind="html: ProductId"></th>
+                    <td data-bind="html: Name"></td>
+                    <td data-bind="html: Price"></td>
+                    <td data-bind="html: QuantityOnHand"></td>
+                    <td>
+                        <a class="btn btn-info btn-addToCart"
+                           data-toggle="modal" data-target=".bootstrapmodal">Add to Cart</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal fade bootstrapmodal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">
+                                How many?
+                            </label>
+                            <select id="quantity-select" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="quantity-confirm" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+
+                        <button type="button" id="closingModal" class="btn btn-danger" data-dismiss="modal"> close &times;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @section scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/knockout")
+            <script type="text/javascript">
+              
+
+                function ProductsViewModel(data) {
+                    var self = this;
+                    self.Name = ko.observable(data.Name);
+                    self.ProductId = ko.observable(data.ProductID);
+                    self.Price = ko.observable(data.Price);
+                    self.QuantityOnHand = ko.observable(data.QuanityOnHand);
+                    self.Quantity = ko.observable(1);
+                }
+
+                function PageModel(products) {
+                    var self = this;
+                    self.Products = ko.observableArray(products);
+                }
+
+                $.getJSON("/api/products", function (data) {
+                    var products = [];
+                    for (var i = 0; i < data.length; i++) {
+                        if (!data[i]) continue;
+                        var model = new ProductsViewModel(data[i]);
+                        products.push(model);
+                    }
+
+                    var pageModel = new PageModel(products);
+                    ko.applyBindings(pageModel, $("body")[0]);
+
+                    $(".btn-addToCart").on("click", function (e) {
+                        e.preventDefault();
+                        selectedProduct = ko.dataFor(this);
+                        
+                    });
+                });
+
+                var selectedProduct = {
+                    id: null,
+                    Quantity: null
+                    
+                };
+
+               $("#quantity-select").change(function () {
+                   var quantity = $(this).val();
+                   selectedProduct.Quantity(quantity);  
+                   })
+               
+                $("#quantity-confirm").on("click", function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: "POST",
+                         url: "api/cart/add/" + selectedProduct.ProductId(),
+                        data: ko.toJSON(selectedProduct),
+                         contentType: "application/json",
+                         complete: function () {
+                            window.location = "/cart";
+                        }
+                    })
+                })
+                
+            
+                
+
+            </script>
+        }
+
+
+    </body>
+
+
+
+</html>

@@ -1,0 +1,114 @@
+﻿
+@model StoreLib.Models.OrderVm
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+    <script type='text/javascript' src='~/Scripts/knockout-3.4.2.js'></script>
+
+</head>
+<body>
+
+
+    <h2> Checkout Thank you for your purchase!  </h2>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity in Stock</th>
+                <th scope="col">Remove</th>
+                <th scope="col"> Total</th>
+            </tr>
+        </thead>
+        <tbody id="update-products" data-bind="foreach: Products">
+            <tr>
+                <th scope="row" data-bind="html: ProductId"></th>
+                <td data-bind="html: Name"></td>
+                <td data-bind="html: Price"></td>
+                <td data-bind="html: Quantity"></td>
+                              
+                <td data-bind="html: Total"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    @*<table id="totalTable" class="table">
+        <thead>
+            <tr>
+                <th scope="col" class="text-right"> Total</th>
+                <th scope="col" class="text-right"> Total</th>
+
+            </tr>
+        </thead>
+        <tbody id="update-products">
+            <tr>
+                <td class="text-right"> PreTax total</td>
+                <td class="text-right" data-bind="html: total"></td>
+            </tr>
+
+            <tr>
+                <td class="text-right"> Tax</td>
+                <td class="text-right" data-bind="html: tax "></td>
+            </tr>
+            <tr>
+                <td class="text-right">Final Total</td>
+                <td class="text-right" data-bind="html: finalTotal "></td>
+            </tr>
+            <tr>
+                <td class="text-right"> <a id="checkout" class="btn btn-primary" data-toggle="modal" data-target=".bootstrapmodal"> Buy now </a></td>
+            </tr>
+        </tbody>*@
+    @*</table>*@
+
+
+
+    <script>
+        
+        //getting the info posted from DB
+      ///////////////////////////////  //seeing if this is the issue //////////////////////////////////////
+        //$.getJSON("/api/cart/tax", function (data) {
+        //    //putting it into json
+        //    var order = ko.toJSON(data);
+        //    //making it a ko observable and adding to the page model
+        //    var pageModel = new PageModel(order);
+        //    //binding the page model to the page
+        //    ko.applyBindings(pageModel, $("body")[0]);
+            
+        //})
+
+
+        //function PageModel(data);{
+        //    var self = this;
+        //    self.order.OrderID = ko.observable(data.OrderID);
+        //    self.order.items = ko.observableArray(data.items);
+        //}
+
+        
+
+        //   var pageModel = new PageModel(order);
+        //   ko.applyBindings(pageModel, $("body")[0]);
+
+
+    </script>
+    </body>
+
+
+        
+</html>
