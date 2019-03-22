@@ -10,12 +10,10 @@ namespace StoreLib.Interfaces
     public interface IStoreDc
     {
         Task<Product[]> GetProductsAsync();
-       // Task<Product[]> UpdateProductsAsync();
-        
+        // Task<Product[]> UpdateProductsAsync();
 
-        Task<Order> InsertOrderId(NewOrder order);
-
-        
+      
         Task<Order> Checkout(NewOrder order);
+        Task<ReturnOrder> GetOrderAsync( ReturnOrder Order);
     }
 }

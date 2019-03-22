@@ -26,5 +26,8 @@ namespace StoreLib.Interfaces
         // Task<Order> Checkout(Order order);
         //Task<Order> Checkout(NewOrder order);
        Task <NewOrder> Checkout(NewOrder order);
+
+        Task<ReturnOrder> GetOrderAsync(ReturnOrder Order);
+            
     }
 }

@@ -63,52 +63,6 @@ namespace StoreLib.Data
             return list.ToArray();
         }
 
-        public async Task<Order> InsertOrderId(NewOrder order)
-        {
-            var sqlConn = new SqlConnection(_connStr);
-            DataTable table = new DataTable();
-
-            table.Columns.Add("ProductID", typeof(int));
-            table.Columns.Add("QuantitytoBuy", typeof(int));
-
-            foreach (var p in order.Items)
-            {
-                var dr = table.NewRow();
-
-                dr["ProductId"] = p.ProductID;
-                dr["QuantityToBuy"] = p.QuantityToBuy;
-                
-                table.Rows.Add(dr);
-            }
-
-
-            var cmd = new SqlCommand();
-            //this is where you pass in the table
-            cmd.Parameters.Add(new SqlParameter("@items", SqlDbType.Structured)
-            {
-                TypeName = "dbo.InsertOrderId",
-                Value = table
-            });
-
-            cmd.Connection = sqlConn;
-            
-
-            // your sp should return the order with its ID and  such
-            // so you need to execute a query, not a nonquery
-            // and use that returned dataset to populate a new Order
-
-          // await cmd.ExecuteQueryAsync(); // <-- change to fill a data adapter
-
-            var newOrder = new Order();
-
-            // populate newOrder from dataset the data adapter created
-
-            return newOrder;
-        }
-
-
-
-
 
         public async Task<Order> Checkout(NewOrder order)
         {
@@ -118,12 +72,16 @@ namespace StoreLib.Data
 
             table.Columns.Add("ProductID", typeof(int));
             table.Columns.Add("QuantitytoBuy", typeof(int));
+            table.Columns.Add("Price", typeof(double));
+            table.Columns.Add("Name", typeof(string));
 
             foreach (var p in order.Items)
             {
                 var dr = table.NewRow();
                 dr["ProductId"] = p.ProductID;
                 dr["QuantityToBuy"] = p.QuantityToBuy;
+                dr["Price"] = p.Price;
+                dr["Name"] = p.Name;
                 table.Rows.Add(dr);
             }           
             
@@ -135,13 +93,14 @@ namespace StoreLib.Data
             };
 
             //this is where you pass in the table
-            cmd.Parameters.Add(new SqlParameter("@items", SqlDbType.Structured)
+            cmd.Parameters.Add(new SqlParameter("@items3", SqlDbType.Structured)
             {
-                TypeName = "dbo.items",
+                TypeName = "dbo.items3",
                 Value =   table
             });
             
             cmd.Parameters.AddWithValue("@taxRate", order.Tax);
+            
 
             var ds = new DataSet();
             var da = new SqlDataAdapter(cmd);
@@ -164,70 +123,80 @@ namespace StoreLib.Data
             {
                 Items = order.Items
                 , OrderId = (int)ds.Tables[0].Rows[0]["orderId"]
-                , Tax = order.Tax
                 , CreateDate = DateTime.UtcNow
+                , Tax = order.Tax
             };
 
             return newOrder;
         }
 
-
-
-       
-
-
-
-        //    var cmd = new SqlCommand
-        //    {
-        //        CommandText = "UpdateProductsAsync",
-        //        CommandType = System.Data.CommandType.StoredProcedure,
-        //        Connection = sqlConn
-        //    };
-
-        //    SqlParameter QuantityPurchase = new SqlParameter();
-        //    QuantityPurchase.ParameterName = "@Quantity";
-
-        //    cmd.Parameters.Add(QuantityPurchase);
-
-        //    SqlParameter ProdID = new SqlParameter();
-        //    ProdID.ParameterName = "@ProductID";
-
-        //    cmd.Parameters.Add(ProdID);
+        public async Task<ReturnOrder> GetOrderAsync(ReturnOrder Order)
+        {
 
 
 
-        //    var da = new SqlDataAdapter(cmd);
-        //    var ds = new DataSet();
+            var sqlConn = new SqlConnection(_connStr);
 
-        //    try
-        //    {
-        //        await sqlConn.OpenAsync();
-        //        da.Fill(ds);
+            var cmd = new SqlCommand
+            {
+                CommandText = "GetOrderAsync",
+                CommandType = System.Data.CommandType.StoredProcedure,
+                Connection = sqlConn
+            };
 
-        //    }
-        //    finally
-        //    {
-        //        if (sqlConn.State == ConnectionState.Open)
-        //            sqlConn.Close();
-        //    }
+            cmd.Parameters.AddWithValue("@orderId", Order.OrderId);
 
-        //    var UpdateList = new List<Product>();
-        //    foreach (DataRow dr in ds.Tables[0].Rows)
-        //    {
-        //        var p = new Product
-        //        {
-        //            ProductID = (int)dr["ProductID"],
-        //            Name = (string)dr["Name"],
-        //            QuanityOnHand = (int)dr["QuantityOnHnad"],
-        //            Price = (decimal)Convert.ChangeType(dr["Price"], typeof(decimal))
-        //        };
-        //        UpdateList.Add(p);
-        //    }
 
-        //    return UpdateList.ToArray();
-        //}
-    }
+            var da = new SqlDataAdapter(cmd);
+            var ds = new DataSet();
 
- }
+            try
+            {
+                await sqlConn.OpenAsync();
+                da.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (sqlConn.State == ConnectionState.Open)
+                    sqlConn.Close();
+            }
+
+            //trying to create the instance to retrieve info about the order from dbo.ORDERS And dbo.OrderDetails
+            // right now just trying to get the info from OrderDetails.
+            //should I pass the OrderId in to this function? 
+            var order = new ReturnOrder()
+            {
+                OrderId = Order.OrderId,
+                Tax = Order.Tax,
+                //DateTime CreatedDate = (DateTime)dr["DateCreated"]
+                Items = new List<OrderProduct>()
+            };
+                 foreach (DataRow dr in ds.Tables[0].Rows)
+                  {
+                var p = new OrderProduct()
+                {
+                    QuantityToBuy = (int)dr["Quantity"],
+                    ProductID = (int)dr["ProductID"],
+                    Price = (double)Convert.ChangeType(dr["Price"], typeof(double)),
+                    Name = (string)dr["Name"],
+                    };
+                order.Items.Add(p);
+                 }
+            return order;
+            }
+           
+               
+            }
+        
+
+           
+        }
+
+   
+ 
     
 

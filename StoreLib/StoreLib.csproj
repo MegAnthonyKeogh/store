@@ -89,6 +89,7 @@
     <Compile Include="Models\NewOrderVm.cs" />
     <Compile Include="Models\OrderVm.cs" />
     <Compile Include="Models\ProductVm.cs" />
+    <Compile Include="Models\ReturnOrderVm.cs" />
     <Compile Include="Models\ShoppingCartVm.cs" />
     <Compile Include="Models\stateTax.cs" />
     <Compile Include="ObjectFactory.cs" />

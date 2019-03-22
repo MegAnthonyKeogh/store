@@ -45,7 +45,8 @@ namespace StoreLib.ViewModelComponents
                 {
                     ProductID = p.ProductID,
                     QuantityToBuy= p.Quantity,
-                    Price = p.Price
+                    Price = p.Price,
+                    Name = p.Name
                     
 
                 };
@@ -56,6 +57,11 @@ namespace StoreLib.ViewModelComponents
             return rderReturntoClient;
         }
 
+        public async Task<ReturnOrderVm> GetOrderAsync(ReturnOrder Order)
+        { 
+            var order = await Store.GetOrderAsync(Order);
+            return _mapOrder(order);
+        }
 
 
         private static ProductVm[] _mapProducts(Product[] list)
@@ -77,30 +83,26 @@ namespace StoreLib.ViewModelComponents
             return output.ToArray();
         }
 
-        
-
-        //public decimal _GetPreTaxTotal(Product[] products)
-        //{
-        //    var preTax = Store._GetPreTaxTotal(products);
-        //    return preTax;
-
-        //}
-
-        //public decimal _GetPostTaxTotal(CartItem[] list)
-        //{
-
-        //    var total = Store._GetPostTaxTotal(list);
-        //    return total;
-        //}
-
-        //public decimal GetTaxPercentage(CarttemVm[] list, string State)
-        //{
-        //    var stateStore = ObjectFactory.Create<IStoreBc>(State);
-        //    var tax = stateStore._GetPostTaxTotal(MapCartItems(list));
-        //    return tax;
-
-        //}
-
+        private static ReturnOrderVm _mapOrder(ReturnOrder Order)
+        {
+            var order = new ReturnOrderVm()
+            {
+                Items = new List<CarttemVm>(),
+                OrderId = Order.OrderId
+            };
+            foreach (var p in Order.Items)
+            {
+                var individualProduct = new CarttemVm()
+                {
+                    ProductID = p.ProductID,
+                    Quantity = p.QuantityToBuy,
+                    Name = p.Name,
+                    Price = p.Price
+                };
+                order.Items.Add(individualProduct);
+            }
+            return order;
+        }
     }
 }
 

@@ -39,8 +39,8 @@ namespace AnotherStore.Controllers.Api
         public async Task<IHttpActionResult>  Index( [FromBody] stateTax state)
         {
             var Cart = ShoppingCartHelper.GetCart(HttpContext.Current);
-            await _vmc.Checkout(Cart, state);
-            return Ok();
+            var order = await _vmc.Checkout(Cart, state);
+            return Ok(order);
         }
 
         

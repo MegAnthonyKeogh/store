@@ -19,6 +19,9 @@ namespace StoreLib.Interfaces
        // decimal _GetPostTaxTotal(CartItem[] list);
 
         Task<NewOrder> Checkout(ShoppingCartVm cart, stateTax state);
-        
+
+        Task<ReturnOrderVm> GetOrderAsync(ReturnOrder Order);
+       // Task GetOrderAsync(ReturnOrderVm order);
+        // Task GetOrderAsync(ReturnOrderVm order);
     }
 }

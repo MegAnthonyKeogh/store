@@ -7,13 +7,13 @@ using System.Web.Mvc;
 using StoreLib.Interfaces;
 using StoreLib.Models;
 
-
 namespace AnotherStore.Controllers
 {
+
     [RoutePrefix("cart")]
     public class CartController : Controller
-
     {
+      
         //private static IStoreVmc _vmc = ObjectFactory.Create<IStoreVmc>();
 
         // GET: Cart
@@ -24,9 +24,6 @@ namespace AnotherStore.Controllers
 
             return View();
         }
-
-        
-
 
 
     }

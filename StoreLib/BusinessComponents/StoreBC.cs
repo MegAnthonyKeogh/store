@@ -33,7 +33,7 @@ namespace StoreLib.BusinessComponents
         public int ShoppingCartId { get; set; }
 
 
-        
+
         //public decimal _GetPreTaxTotal(Product[] products)
         //{
         //    decimal preTaxTotal = 0;
@@ -76,6 +76,13 @@ namespace StoreLib.BusinessComponents
         {
             var updatedProducts = await DataComponent.Checkout(order);
             return updatedProducts;
+        }
+
+
+        public async Task<ReturnOrder> GetOrderAsync(ReturnOrder Order)
+        {
+            var order = await DataComponent.GetOrderAsync(Order);
+            return order;
         }
     }
 }

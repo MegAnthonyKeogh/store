@@ -223,9 +223,10 @@
                         , contentType: "application/json"
 
                         , data: JSON.stringify(pageModel.states.selectedState())
+                       
 
-                        , complete: function () {
-                            window.location = "/checkout";
+                        , success: function (data) {
+                            window.location = "/checkout/" + data.OrderId;
                         }
                     })
                 })
