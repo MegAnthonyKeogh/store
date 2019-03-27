@@ -1,0 +1,79 @@
+﻿
+
+@*@model StoreLib.Models.ReturnOrderVm*@
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "fail";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+    <script type='text/javascript' src='~/Scripts/knockout-3.4.2.js'></script>
+
+</head>
+<body>
+
+
+    <h2> Your order could not be processed at this time  </h2>
+    @*<h3> Your order number is  @Html.Raw(Model.OrderId)</h3>
+    <h3 id="tax" data-tax="tax">Your tax rate is :  @Html.Raw(Model.Tax)</h3>
+    <h3> Your total with tax is: $ </h3> <h3 data-bind="html: finalTotal"> </h3>
+    <h3>Your total before tax is: $</h3><h3 data-bind="html: Total"></h3>*@
+
+    <hr />
+
+    @*<table class="table">
+        <thead>
+            <tr>
+
+                <th scope="col">Product ID</th>
+                <th scope="col">Quantity </th>
+                <th scope="col"> Total</th>
+
+            </tr>
+        </thead>
+        <tbody id="update-products">
+
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+
+                    <td>@Html.Raw(item.Name) </td>
+
+                    <td id="quantity" data-quantity="quantity">@Html.Raw(item.Quantity)</td>
+                    <td id="price" data-price="price">@Html.Raw(item.Price)</td>
+
+
+
+                </tr>
+
+
+            }
+        </tbody>
+    </table>*@
+
+
+
+
+
+    @section scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/knockout")
+        <script type="text/javascript">
+
+          
+
+        </script>
+    }
+</body>
+</html>

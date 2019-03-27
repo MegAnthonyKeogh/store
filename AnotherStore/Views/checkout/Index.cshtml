@@ -24,38 +24,44 @@
 
 
     <h2> Checkout Thank you for your purchase!  </h2>
-    <h3> Your order number is </h3>  @Html.Raw( Model.OrderId)
-    <h3> Your total is  </h3> 
-    <h3 data-bind="html: OrderId"></h3>
+    <h3> Your order number is  @Html.Raw(Model.OrderId)</h3>
+    <h3 id="tax" data-tax="tax">Your tax rate is :  @Html.Raw(Model.Tax)</h3>
+    <h3 > Your total with tax is: $ </h3> <h3 data-bind="html: finalTotal"> </h3>
+    <h3>Your total before tax is: $</h3><h3 data-bind="html: Total"></h3>
+   
     <hr />
 
     <table class="table">
         <thead>
             <tr>
-                
+
                 <th scope="col">Product ID</th>
                 <th scope="col">Quantity </th>
                 <th scope="col"> Total</th>
+                
             </tr>
         </thead>
         <tbody id="update-products">
-            
+
             @foreach (var item in Model.Items)
             {
                 <tr>
 
                     <td>@Html.Raw(item.Name) </td>
 
-                    <td>@Html.Raw(item.Quantity)</td>
-                    <td>@Html.Raw(item.Price)</td>
-             
+                    <td id="quantity" data-quantity="quantity">@Html.Raw(item.Quantity)</td>
+                    <td id="price" data-price="price">@Html.Raw(item.Price)</td>
+
+
 
                 </tr>
+
+
             }
-            </tbody>
+        </tbody>
     </table>
 
-    
+
 
 
 
@@ -63,11 +69,62 @@
         @Scripts.Render("~/bundles/jqueryval")
         @Scripts.Render("~/bundles/knockout")
         <script type="text/javascript">
-            //getting the info posted from DB
-            ///////////////////////////////  //seeing if this is the issue //////////////////////////////////////
-           
-        
 
+            // making the info from the server into a JSON OBJECT THIS Works
+            var model = @Html.Raw(Json.Encode(Model));
+         //   var ViewModel = { model };
+
+            // making the tax useable this works 
+            var tax = model.Tax;
+
+           // var itemsArray = model.Items;
+
+            // puting the items into an array to calcualte the total w and w/o tax
+            var items = [];
+            for (var i = 0; i < model.Items.length; i++) {
+                var item = new ItemViewModel(model.Items[i]);
+                items.push(item);    
+                
+            }
+            // reach item in the item [] goes into the ItemView MOdel
+            function ItemViewModel(data) {
+                var self = this;
+                self.price = ko.observable(data.Price);
+                self.quantity = ko.observable(data.Quantity);
+                self.totalPerItem = ko.computed(function () {
+                    var t = self.price() * self.quantity();
+                    return t;
+                })
+            }
+           
+
+            function PageModel(model) {
+                var self = this;
+                self.model = ko.observable(model);
+               // self.itemsArray = ko.observableArray(model.Items);
+                // each product should be here and useable in self.Items
+                self.items = ko.observableArray(items);
+                self.tax = ko.observable(model.Tax);
+                self.Total = ko.computed(function () {
+                    var t = 0;
+                    if (self.items()) {
+                        for (var i = 0; i < self.items().length; i++) {
+                            t += self.items()[i].price() * self.items()[i].quantity();
+                        }
+                    }
+                    return t;
+                }, this);
+                self.finalTotal = ko.computed(function () {
+                    t = 0;
+                    t = self.Total() + (self.Total() * self.tax());
+                    return t;
+                })
+
+             
+            }
+            var pageModel = new PageModel(model);
+            ko.applyBindings(pageModel, $("body")[0])
+            
         </script>
     }
 </body>     

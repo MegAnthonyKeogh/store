@@ -9,8 +9,9 @@ namespace StoreLib.Entities
     public class ReturnOrder 
     {
 
+
         public int OrderId { get; set; }
-        public float Tax { get; set; }
+        public decimal Tax { get; set; }
         public List<OrderProduct> Items { get; set; }
     }
 }

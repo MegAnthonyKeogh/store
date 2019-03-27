@@ -11,7 +11,7 @@ namespace StoreLib.Exceptions
         public OrderProduct Product { get; private set; }
 
         public InvalidProductQuantity(OrderProduct p)
-            : base($"Customer cannot purchase {p.QuantityToBuy} {p.Name}(s). Only {p.QuanityOnHand} are available. ")
+            : base($"Customer cannot purchase {p.QuantityToBuy} {p.Name}(s). ")
         {
             Product = p;
         }

@@ -88,7 +88,8 @@ namespace StoreLib.ViewModelComponents
             var order = new ReturnOrderVm()
             {
                 Items = new List<CarttemVm>(),
-                OrderId = Order.OrderId
+                OrderId = Order.OrderId,
+                Tax = Order.Tax
             };
             foreach (var p in Order.Items)
             {

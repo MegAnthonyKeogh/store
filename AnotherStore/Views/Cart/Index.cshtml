@@ -225,9 +225,13 @@
                         , data: JSON.stringify(pageModel.states.selectedState())
                        
 
+                        //removed the orderid
                         , success: function (data) {
-                            window.location = "/checkout/" + data.OrderId;
-                        }
+                            window.location = "/checkout/"+ data
+                        },
+                        error: function (data) {
+                            window.location = "/checkout/fail" 
+                            }
                     })
                 })
                 

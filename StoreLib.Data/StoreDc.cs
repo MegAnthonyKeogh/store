@@ -83,8 +83,8 @@ namespace StoreLib.Data
                 dr["Price"] = p.Price;
                 dr["Name"] = p.Name;
                 table.Rows.Add(dr);
-            }           
-            
+            }
+
             var cmd = new SqlCommand
             {
                 CommandText = "InsertOrderId",
@@ -96,11 +96,11 @@ namespace StoreLib.Data
             cmd.Parameters.Add(new SqlParameter("@items3", SqlDbType.Structured)
             {
                 TypeName = "dbo.items3",
-                Value =   table
+                Value = table
             });
-            
+
             cmd.Parameters.AddWithValue("@taxRate", order.Tax);
-            
+
 
             var ds = new DataSet();
             var da = new SqlDataAdapter(cmd);
@@ -110,24 +110,40 @@ namespace StoreLib.Data
                 await sqlConn.OpenAsync();
                 da.Fill(ds);
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message);
+              if (ex.Errors[0].Class == 16)
+                {
+                    throw;
+                }
             }
             finally
             {
                 sqlConn.Close();
             }
 
+           
+
             var newOrder = new Order
             {
                 Items = order.Items
-                , OrderId = (int)ds.Tables[0].Rows[0]["orderId"]
-                , CreateDate = DateTime.UtcNow
-                , Tax = order.Tax
-            };
+                ,
+                OrderId = (int)ds.Tables[0].Rows[0]["orderId"]
 
-            return newOrder;
+                ,
+                CreateDate = DateTime.UtcNow
+                ,
+                Tax = order.Tax
+            };
+            
+            if (newOrder.OrderId != (int)ds.Tables[0].Rows[0]["orderId"])
+
+            {
+                throw new Exceptions.InvalidProductQuantity(new OrderProduct { QuantityToBuy = order.Items[0].QuantityToBuy });
+               
+            
+            }
+            else return newOrder;
         }
 
         public async Task<ReturnOrder> GetOrderAsync(ReturnOrder Order)
@@ -171,31 +187,36 @@ namespace StoreLib.Data
             var order = new ReturnOrder()
             {
                 OrderId = Order.OrderId,
-                Tax = Order.Tax,
+               // Tax = new ReturnOrder().Tax,
                 //DateTime CreatedDate = (DateTime)dr["DateCreated"]
                 Items = new List<OrderProduct>()
             };
-                 foreach (DataRow dr in ds.Tables[0].Rows)
-                  {
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
                 var p = new OrderProduct()
                 {
                     QuantityToBuy = (int)dr["Quantity"],
                     ProductID = (int)dr["ProductID"],
                     Price = (double)Convert.ChangeType(dr["Price"], typeof(double)),
                     Name = (string)dr["Name"],
-                    };
+                };
                 order.Items.Add(p);
-                 }
-            return order;
-            }
-           
-               
-            }
-        
 
-           
+            }
+          
+            order.Tax = (decimal)Convert.ChangeType(ds.Tables[0].Rows[0]["TaxRate"], typeof(decimal));
+            
+
+
+            return order;
+
         }
 
+
+
+    }
+}
    
  
     
