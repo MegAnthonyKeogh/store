@@ -227,7 +227,7 @@
 
                         //removed the orderid
                         , success: function (data) {
-                            window.location = "/checkout/"+ data
+                            window.location = "/checkout/" + data.OrderId
                         },
                         error: function (data) {
                             window.location = "/checkout/fail" 

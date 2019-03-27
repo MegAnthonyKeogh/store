@@ -43,7 +43,6 @@ namespace AnotherStore.Controllers
 
 
         [Route("{OrderId}")]
-        [Route("")]
         [HttpGet]
         // this should be an async await task. this is duplicated in the api shopping cart controller
         public async  Task<ActionResult> Index( int OrderId)

@@ -112,7 +112,7 @@ namespace StoreLib.Data
             }
             catch (SqlException ex)
             {
-              if (ex.Errors[0].Class == 16)
+                if (ex.Errors[0].Class == 16)
                 {
                     throw;
                 }
@@ -122,29 +122,23 @@ namespace StoreLib.Data
                 sqlConn.Close();
             }
 
-           
 
-            var newOrder = new Order
-            {
-                Items = order.Items
-                ,
-                OrderId = (int)ds.Tables[0].Rows[0]["orderId"]
-
-                ,
-                CreateDate = DateTime.UtcNow
-                ,
-                Tax = order.Tax
-            };
             
-            if (newOrder.OrderId != (int)ds.Tables[0].Rows[0]["orderId"])
+                var newOrder = new Order   
+                {
+                    Items = order.Items
+                    ,
+                    OrderId = (int)ds.Tables[0].Rows[0]["orderId"]
 
-            {
-                throw new Exceptions.InvalidProductQuantity(new OrderProduct { QuantityToBuy = order.Items[0].QuantityToBuy });
-               
+                    ,
+                    CreateDate = DateTime.UtcNow
+                    ,
+                    Tax = order.Tax
+                };
             
-            }
-            else return newOrder;
+             return newOrder;
         }
+    
 
         public async Task<ReturnOrder> GetOrderAsync(ReturnOrder Order)
         {
