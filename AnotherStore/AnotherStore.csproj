@@ -157,6 +157,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Photos\Bridge.jpg" />
+    <Content Include="Photos\butterflies.jpg" />
+    <Content Include="Photos\camping.jpg" />
+    <Content Include="Photos\farm.jpg" />
+    <Content Include="Photos\Jetty.jpg" />
+    <Content Include="Photos\pipe.jpg" />
+    <Content Include="Photos\rose.jpg" />
+    <Content Include="Photos\soap-bubble.jpg" />
+    <Content Include="Photos\Sunset.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include=".bin\bower.cmd" />

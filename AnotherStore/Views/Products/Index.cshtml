@@ -34,6 +34,7 @@
                     <th scope="col">Product Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity in Stock</th>
+                    <th scope="col"> Image</th>
                     <th scope="col">Add to Cart</th>
                 </tr>
             </thead>
@@ -43,6 +44,9 @@
                     <td data-bind="html: Name"></td>
                     <td data-bind="html: Price"></td>
                     <td data-bind="html: QuantityOnHand"></td>
+                    <td> <img width="100" height="100" data-bind="attr: {src: Image}" /></td>
+                    
+                    @*<td> <img src="~/Photos/Bridge.jpg" /></td>*@
                     <td>
                         <a class="btn btn-info btn-addToCart"
                            data-toggle="modal" data-target=".bootstrapmodal">Add to Cart</a>
@@ -93,6 +97,7 @@
                     self.Price = ko.observable(data.Price);
                     self.QuantityOnHand = ko.observable(data.QuanityOnHand);
                     self.Quantity = ko.observable(1);
+                    self.Image = ko.observable(data.Image);
                 }
 
                 function PageModel(products) {

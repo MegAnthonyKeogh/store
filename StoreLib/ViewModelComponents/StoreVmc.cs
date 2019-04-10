@@ -21,7 +21,6 @@ namespace StoreLib.ViewModelComponents
             set => _store = value;
         }
 
-
         public async Task<ProductVm[]> GetProductsAsync()
         {
             var products = await Store.GetProductsAsync();
@@ -46,7 +45,8 @@ namespace StoreLib.ViewModelComponents
                     ProductID = p.ProductID,
                     QuantityToBuy= p.Quantity,
                     Price = p.Price,
-                    Name = p.Name
+                    Name = p.Name,
+                    Image = p.Image
                     
 
                 };
@@ -76,6 +76,7 @@ namespace StoreLib.ViewModelComponents
                     Name = p.Name,
                     Price = p.Price,
                     QuanityOnHand = p.QuanityOnHand,
+                    Image = p.Image
                 };
                 output.Add(vm);
             }
