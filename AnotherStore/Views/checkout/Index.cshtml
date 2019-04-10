@@ -37,6 +37,7 @@
 
                 <th scope="col">Product ID</th>
                 <th scope="col">Quantity </th>
+                <th scope="col"> Image</th>
                 <th scope="col"> Total</th>
                 
             </tr>
@@ -50,6 +51,7 @@
                     <td>@Html.Raw(item.Name) </td>
 
                     <td id="quantity" data-quantity="quantity">@Html.Raw(item.Quantity)</td>
+                   
                     <td id="price" data-price="price">@Html.Raw(item.Price)</td>
 
 
@@ -90,6 +92,7 @@
             function ItemViewModel(data) {
                 var self = this;
                 self.price = ko.observable(data.Price);
+               // self.Image = ko.observable(data.Image);
                 self.quantity = ko.observable(data.Quantity);
                 self.totalPerItem = ko.computed(function () {
                     var t = self.price() * self.quantity();

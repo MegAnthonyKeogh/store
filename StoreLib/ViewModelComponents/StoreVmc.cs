@@ -46,7 +46,7 @@ namespace StoreLib.ViewModelComponents
                     QuantityToBuy= p.Quantity,
                     Price = p.Price,
                     Name = p.Name,
-                    Image = p.Image
+                    //Image = p.Image
                     
 
                 };

@@ -33,6 +33,7 @@
                     <th scope="col">Product Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity in Stock</th>
+                    <th scope="col"> Image </th>
                     <th scope="col">Remove</th>
                     <th scope="col"> Total</th>
                 </tr>
@@ -43,6 +44,7 @@
                     <td data-bind="html: Name"></td>
                     <td data-bind="html: Price"></td>
                     <td data-bind="html: Quantity"></td>
+                    <td> <img width="100", height="100" data-bind="attr: {src: Image}" /></td>
                     <td>
                         <a class="btn btn-danger"
                            data-bind="click: $root.remove">Remove from Cart</a>
@@ -197,6 +199,7 @@
                     self.Name = ko.observable(data.Name);
                     self.ProductId = ko.observable(data.ProductID);
                     self.Price = ko.observable(data.Price);
+                    self.Image = ko.observable(data.Image);
 
                     self.Quantity = ko.observable(data.Quantity);
 

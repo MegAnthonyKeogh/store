@@ -75,7 +75,7 @@ namespace StoreLib.Data
             table.Columns.Add("QuantitytoBuy", typeof(int));
             table.Columns.Add("Price", typeof(double));
             table.Columns.Add("Name", typeof(string));
-            table.Columns.Add("Image", typeof(string));
+            //table.Columns.Add("Image", typeof(string));
 
             foreach (var p in order.Items)
             {
@@ -84,7 +84,7 @@ namespace StoreLib.Data
                 dr["QuantityToBuy"] = p.QuantityToBuy;
                 dr["Price"] = p.Price;
                 dr["Name"] = p.Name;
-                dr["Image"] = p.Image;
+                //dr["Image"] = p.Image;
                 table.Rows.Add(dr);
             }
 
@@ -196,8 +196,8 @@ namespace StoreLib.Data
                     QuantityToBuy = (int)dr["Quantity"],
                     ProductID = (int)dr["ProductID"],
                     Price = (double)Convert.ChangeType(dr["Price"], typeof(double)),
-                    Name = (string)dr["Name"],
-                    Image = (string)dr["Image"]
+                    Name = (string)dr["Name"]
+                    //Image = (string)dr["Image"]
                 };
                 order.Items.Add(p);
 
