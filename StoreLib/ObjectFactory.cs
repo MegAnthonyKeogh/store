@@ -11,11 +11,13 @@ namespace StoreLib
 
         static ObjectFactory()
         {
+            //this creates a variable that is a list of strongly typed objects. See the POCO in ObjectFactory.cs
             _registrations = new List<ObjectFactoryRegistration>();
         }
 
         public static TInterface Create<TInterface>()
         {
+            //this method creates an interface for the object as long as the object is not null. 
             var item = _registrations.FirstOrDefault(x => x.Interface == typeof(TInterface))?.Concrete;
             if (item != null)
                 return (TInterface)item;
@@ -25,6 +27,8 @@ namespace StoreLib
 
         public static TInterface Create<TInterface>(string name)
         {
+            //this is method overloading. If the object has a name or not, it will receive an Interface that's in the shape of the concrete version
+            //method overloading is when a method has the same name, but can take a different amount of agruments being passed to it.
             var item = _registrations.FirstOrDefault(x =>
                 x.Interface == typeof(TInterface)
                 && x.Name == name)?.Concrete;
@@ -34,12 +38,14 @@ namespace StoreLib
             return default(TInterface);
         }
 
+        //This method says, ' register this object when the Interface matches the concrete version.
         public static void Register<TInterface, TConcrete>(TConcrete concrete)
             where TConcrete : TInterface
         {
             Register<TInterface, TConcrete>(concrete, null);
         }
 
+        //this method is overloading. This one takes a second parameter/argument. It will accept a named object.
         public static void Register<TInterface, TConcrete>(TConcrete concrete, string name)
             where TConcrete : TInterface
         {
