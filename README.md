@@ -25,6 +25,10 @@ This project is an MVC (Model-View-Controller) design that connects to SQL serve
 * The data access layer is the connection to the database. It provides the connection and the commands. It also manipulates the data so that it will comply with SQL commands and terminology. 
 * The database includes the tables we need to keep inventory, customer orders and tax information. The data base also has stored procedures created to execute orders and their corresponding tax needs. 
 
+### Starting the Project
+Now that we understand the Architecture of the application and the flow, let's start building it!
+
+
 
 
 
