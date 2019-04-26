@@ -33,6 +33,9 @@ Now that we understand the Architecture of the application and the flow, let's s
 4. Name the Project. This one is named, 'AnotherStore'. Save it. 
 5. Select MVC framework. *Please feel free to select tests to be added. I will not cover tests but its good practice to include them*
 
+You'll see in the Solution Explorer that some of the architecture of the site is created for you. 
+![Starting layout](https://github.com/MegAnthonyKeogh/store/master/Starting.png)
+
 
 
 
