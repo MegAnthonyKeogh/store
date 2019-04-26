@@ -36,6 +36,11 @@ Now that we understand the Architecture of the application and the flow, let's s
 You'll see in the Solution Explorer that some of the architecture of the site is created for you. 
 ![Starting layout](StartingSS.png)
 
+Next we want to make sure the application as is, is working. Click Build on the top navigation bar to build the solution. 
+After the immediate window or output tells you the build was successful, or something like this prints out `========== Build: 0 succeeded, 0 failed, 1 up-to-date, 0 skipped ==========` launch the application. Do this by going to Debug and select Start without Debugging. We didn't set any Debugging break points, so starting with Debugging is unnecessary. 
+Your browser will launch the site. It should look like this below. Make sure the links work too. Click around and see what's already been built to help you. 
+![Initial Site Build] (LaunchSS.png)
+
 
 
 
