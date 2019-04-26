@@ -44,6 +44,11 @@ Your browser will launch the site. It should look like this below. Make sure the
 Next we will begin building out our Object Factory in our business layer of the application. First we need to add a new project to this one. In the Solution Explorer, right click on the solution. Then **Add** > **New Project**. Then select **Class Library (.Net framework)** and name it (if you want) StoreLib. 
 ![Adding a new Project to a Solution](AddNewProject.png)
 
+Next, we need to add the Object Factory Class. Right click on **StoreLib** > **Add** > **Class** then select **Class** and name it, *ObjectFactory.cs*. 
+We also need to build our Object Factory Registration. Follow the previous steps to build *ObjectFactory.cs*
+So why do we need these two classes and how do they work together? 
+The Object Factory Registration creates a strongly typed POCO model for the Object factory. Now, every object coming out of the object factory will follow the Registration model. Thus we are ensuring that every object has a string Name, an Interface and Contrete version. 
+
 
 
 
