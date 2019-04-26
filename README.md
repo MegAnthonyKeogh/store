@@ -52,6 +52,8 @@ Please review the code and the comments for this option.
 
 ## Populate the store, but first, SQL
 Now that we have our object factory, we can start populating what's in our store. Since I'm somewhat familiar with working in SQL, I was able to setup my server before this project. I also manually entered the data for the products within SQL. If you don't have SQL server set up on your computer, and have not done it before, please ask someone to help you. Its hard to do on your own. [Here's a helpful link from MicroSoft to help you do it](https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server?view=sql-server-2017).
+Once you have SQL installed, make sure you connect it and create a Database. In this project, I've named my database, 'AnotherStore'. Create this database by opening a new query (click on the new query button). Enter this code `create database AnotherStore` and execute it by highlighting it and clicking the Execute button. If your command is successful, you will see a message in the immediate window. It will say, "Commands Completed Successfully".
+![SQL Create a Database Successfully](SQCreate.png)
 
 
 
