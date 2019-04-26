@@ -62,7 +62,7 @@ Everything in the store, aside from the image path is listed as **not nul**l. Th
 **Int** means integer, and 
 **varchar(255)** means 'variable characters no longer than 255 characters long'. This means any keyboard character can be use here and the name must be shorter than 255 character length. This usually equates to strings in c#. I like to use this for the image paths and names for the products. Also, saving the image path instead of the image is a good idea. 
 Here's what your command should look like. Feel free to name the table and the database to your liking. My database is NewBD, and the table is Products. 
-![SQL Table Creation](SQLTable.png)
+![SQL Table Creation](Table.png)
 ![Populating the table](SQLPopTable.png)
 
 
