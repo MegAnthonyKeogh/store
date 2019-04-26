@@ -14,6 +14,17 @@ While building this project I learned some valuable insight into building and de
 ### Application Architechure/Flow
 This project is an MVC (Model-View-Controller) design that connects to SQL server. It has three distinct layers, and additional layers within it to comply with the enterprise format. The three overarching layers are:
 1. Client - composed of the View, the Controller, the View Models, and the View Model Controller (VMCs)
+..* The View is what is displayed in the browser to the user
+..* The Controller decides what is shown based on the actions and the URL
+..* The View Models or VMs are the shape of the objects being displayed. 
 2. Business - composed of Entities or POCOs (Plain Old C# Object), and Business Logic, and the Object factory.
+..* The entities are the shape of the objects being use in this program and the shape the objects will be in the database.
+..* The business logic is any logic assigned from the business. This can be arbitrary rules, taxes etc.
+..* The object factory simply creates objects(and their interfaces) to be formed in whatever context they are needed. This is an abstract idea, but it allows the rest of the application to function and pass data to the user from the database and vice versa. 
 3. Data - composed of the Data Access Layer and the Database
+..* The data access layer is the connection to the database. It provides the connection and the commands. It also manipulates the data so that it will comply with SQL commands and terminology. 
+..* The database includes the tables we need to keep inventory, customer orders and tax information. The data base also has stored procedures created to execute orders and their corresponding tax needs. 
+
+
+
 
