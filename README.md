@@ -56,7 +56,13 @@ Once you have SQL installed, make sure you connect it and create a Database. In 
 ![SQL Create a Database Successfully](SQCreate.png)
 
 #### Create the products table
-
+Use the following picture to make your table in SQL. By setting the Primary Key to the ProductID, that gives SQL the power to create a unique identifer for each product in the store. This is important for when we're updating inventory with each purchase/or when we replenish the store. 
+###### Important SQL commands and abbrievations to know for this project
+Everything in the store, aside from the image path is listed as **not nul**l. This means that you have to enter a value for the table to accept the incoming object/product. 
+**Int** means integer, and 
+**varchar(255)** means 'variable characters no longer than 255 characters long'. This means any keyboard character can be use here and the name must be shorter than 255 character length. This usually equates to strings in c#. I like to use this for the image paths and names for the products. Also, saving the image path instead of the image is a good idea. 
+Here's what your command should look like. Feel free to name the table and the database to your liking. My database is NewBD, and the table is Products. 
+![SQL Table Creation](SQLTable.png)
 
 
 
