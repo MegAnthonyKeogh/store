@@ -41,7 +41,7 @@ After the immediate window or output tells you the build was successful, or some
 Your browser will launch the site. It should look like this below. Make sure the links work too. Click around and see what's already been built to help you. 
 ![Initial Site Build](LaunchSS.png)
 
-Next we will begin building out our Object Factory in our business layer of the application. First we need to add a new project to this one. In the Solution Explorer, right click on the solution. 
+Next we will begin building out our Object Factory in our business layer of the application. First we need to add a new project to this one. In the Solution Explorer, right click on the solution. Then **Add** > **New Project**. Then select **Class Library (.Net framework)** and name it (if you want) StoreLib. 
 ![Adding a new Project to a Solution](AddNewProject.png)
 
 
