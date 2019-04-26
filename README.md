@@ -27,6 +27,12 @@ This project is an MVC (Model-View-Controller) design that connects to SQL serve
 
 ### Starting the Project
 Now that we understand the Architecture of the application and the flow, let's start building it!
+1. Start Visual Studio - I'm using VS 2017 for this project. 
+2. Go to **File** > **New** > **New Project**
+3. Select **ASP.NET Web Application (.Net framework) in Visual C#**
+4. Name the Project. This one is named, 'AnotherStore'. Save it. 
+5. Select MVC framework. *Please feel free to select tests to be added. I will not cover tests but its good practice to include them*
+
 
 
 
