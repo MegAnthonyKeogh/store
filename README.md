@@ -66,6 +66,18 @@ Here's what your command should look like. Feel free to name the table and the d
 ![Populating the table](SQLPopTable.png)
 
 
+###### Stored Procedures in SQL
+Stored Procedures are a very new topic for me. Before starting this project, I only have experience doing basic CRUD (Create, Read, Update, Delete) in SQL and any other database. According to W3schools.com A Stored Procedure is, "A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
+So if you have an SQL query that you write over and over again, save it as a stored procedure, and then just call it to execute it.
+You can also pass parameters to a stored procedure, so that the stored procedure can act based on the parameter value(s) that is passed."
+A stored procedure helps keep your code DRY (Don't repeat yourself). This way, you dont have to code the same sql query again and again. This helps with fixing bugs later. 
+This first stored procedure is simple. It creates a table of all of the products that are in the store. 
+
+### Connecting the Data Layer to SQL
+Now that our inventory is updated in the database, it is time to connect the Data layer to the project. 
+
+
+
 
 
 
