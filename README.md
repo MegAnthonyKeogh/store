@@ -72,6 +72,7 @@ So if you have an SQL query that you write over and over again, save it as a sto
 You can also pass parameters to a stored procedure, so that the stored procedure can act based on the parameter value(s) that is passed."
 A stored procedure helps keep your code DRY (Don't repeat yourself). This way, you dont have to code the same sql query again and again. This helps with fixing bugs later. 
 This first stored procedure is simple. It creates a table of all of the products that are in the store. 
+![Stored Procedure in SQL](StoredProcedures.png)
 
 ### Connecting the Data Layer to SQL
 Now that our inventory is updated in the database, it is time to connect the Data layer to the project. 
