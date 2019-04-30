@@ -73,6 +73,10 @@ You can also pass parameters to a stored procedure, so that the stored procedure
 A stored procedure helps keep your code DRY (Don't repeat yourself). This way, you dont have to code the same sql query again and again. This helps with fixing bugs later. 
 This first stored procedure is simple. It creates a table of all of the products that are in the store. 
 ![Stored Procedure in SQL](StoredProcedures.png)
+I highlighted the steps in folders in red that will lead you to where my stored procedures are in this database. 
+Once you reach the stored procedure (assuming one is already made in your account. If you right-click on the procedure and click modify, the procedure is visible for you to view and change it. 
+
+Let's recreate this procedure in a new database for practice. 
 
 ### Connecting the Data Layer to SQL
 Now that our inventory is updated in the database, it is time to connect the Data layer to the project. 
