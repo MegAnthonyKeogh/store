@@ -90,6 +90,60 @@ Here's my config below. I have crossed out the server. The servername and the da
 
 Now it's time to add the code to our Data Layer to establish a connection to our data and and call our Stored Procedure GetProductsAsync. Create a class called, 'StoreDC'. Here is where we will put the code that connects to our database. Now that we have a StoreDC, we need an interface to go with it. In the StoreLib project, add a folder called 'Interfaces', now add an interface called, 'IStoreDC'. Make it public by adding the key word public before interface. Now go back to he StoreLib.Data project and right click. Add a reference to the project. check that you would like to add a reference to StoreLib.Interfaces. Now add : IStoreDC after public class StoreDC. Now your program will remind you to create an interface with every method you create in StoreDC. This will help later when you start unit testing the code. 
 
+Now we need to make our Products POCO In a new project called StoreLib.Entities. This is where we will store the shape our objects. This is a C# Class Project. We are simply setting shape so that the each product row from SQL will transition nicely into our C# program. Make sure all of the fields in the POCO are spelled correctly and have the correct type to correspond to SQL. 
+Add this point, I also added a 'photos' folder to my main project (the one that's listed in bold font). In this folder I added the images that will be use in my project. Your file path needs to match the file path you have stored in SQL so your program knows where to look for the image and thus it is able to display it to the user. Make sure your StoreDC has a reference to your StoreLib.Entities. Otherwise, it will not know to look there for the Product POCO. 
+
+Here is the code and comments for this method in StoreDc. // signifies a comment. 
+`   public async Task<Product[]> GetProductsAsync()
+        {
+            var sqlConn = new SqlConnection(_connStr);
+            // initialiazes an instance of sql connection. This is how we connect to the DB when this function is called
+
+            var cmd = new SqlCommand
+            {
+                CommandText = "GetProductsAsync",
+                CommandType = System.Data.CommandType.StoredProcedure,
+                Connection = sqlConn
+            };
+            // above is how we tell sql that we're calling our Store Procedure, GetProductsAsync and that we have connected
+
+            var da = new SqlDataAdapter(cmd);
+            var ds = new DataSet();
+            //the above create the variables get the data for us. 
+
+            try
+            {
+                await sqlConn.OpenAsync();
+                da.Fill(ds);
+                // Here is where the action is. We open the connection, run the stored procedure and  take the data
+            }
+            finally
+            {
+                if (sqlConn.State == ConnectionState.Open)
+                    sqlConn.Close();
+                //this is where we close the connection
+            }
+            // now that we have the data, here is where we use our POCO to strongly type our objects
+            //then we add them to a list so that we can pass it to the user to view. 
+            var list = new List<Product>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                var p = new Product
+                {
+                    ProductID = (int)dr["ProductID"],
+                    Name = (string)dr["Name"],
+                    QuanityOnHand = (int)dr["QuantityOnHnad"],
+                    Price = (double)Convert.ChangeType(dr["Price"], typeof(double)),
+                    Image = (string)dr["Image"]
+                };
+                list.Add(p);
+            }
+
+            return list.ToArray();
+        }
+`
+
+
 
 
 
