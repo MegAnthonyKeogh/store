@@ -86,7 +86,7 @@ In the picture below, I have created the function. It is a simple select all met
 ### Connecting the Data Layer to SQL
 Now that our inventory is updated in the database, it is time to connect the Data layer to the project. Go back to your project in Visual Studio. Click on the all encompassing project and right-click it to add another project. Make sure it's .Net Framework, so you have a web.config file ready for you to use. Before the closing configuration tag, we're going to add our connection string. In here, you want to specify your database, and the server. If you're unsure what your server name is, you'll see if when you open SQL. Whatever is in the textbox across from server is the server name. 
 Here's my config below. I have crossed out the server. The servername and the database information are separated by the semicolon(;).
-![Web Configuration for Data Layer](DCWebConfig.png)
+![Web Configuration for Data Layer](DCwebConfig.png)
 
 
 
