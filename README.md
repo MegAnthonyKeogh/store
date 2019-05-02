@@ -88,7 +88,8 @@ Now that our inventory is updated in the database, it is time to connect the Dat
 Here's my config below. I have crossed out the server. The servername and the database information are separated by the semicolon(;).
 ![Web Configuration for Data Layer](DCwebConfig.png)
 
-Now it's time to add the code to our Data Layer to establish a connection to our data and and call our Stored Procedure GetProductsAsync.
+Now it's time to add the code to our Data Layer to establish a connection to our data and and call our Stored Procedure GetProductsAsync. Create a class called, 'StoreDC'. Here is where we will put the code that connects to our database. Now that we have a StoreDC, we need an interface to go with it. In the StoreLib project, add a folder called 'Interfaces', now add an interface called, 'IStoreDC'. Make it public by adding the key word public before interface. Now go back to he StoreLib.Data project and right click. Add a reference to the project. check that you would like to add a reference to StoreLib.Interfaces. Now add : IStoreDC after public class StoreDC. Now your program will remind you to create an interface with every method you create in StoreDC. This will help later when you start unit testing the code. 
+
 
 
 
