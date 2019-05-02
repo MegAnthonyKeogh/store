@@ -94,6 +94,7 @@ Now we need to make our Products POCO In a new project called StoreLib.Entities.
 Add this point, I also added a 'photos' folder to my main project (the one that's listed in bold font). In this folder I added the images that will be use in my project. Your file path needs to match the file path you have stored in SQL so your program knows where to look for the image and thus it is able to display it to the user. Make sure your StoreDC has a reference to your StoreLib.Entities. Otherwise, it will not know to look there for the Product POCO. 
 
 Here is the code and comments for this method in StoreDc. // signifies a comment. 
+Keep in mind, now that we have a method, we need to update our interface with this new method or our project won't compile. 
 `   public async Task<Product[]> GetProductsAsync()
         {
             var sqlConn = new SqlConnection(_connStr);
