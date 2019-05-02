@@ -146,7 +146,32 @@ StoreDC code below:
             return list.ToArray();
         }
 `
+How that the Data is in our application, we have to pass it up through the layers. The next layer to pass the data to is the StoreLibBC. BC stands for Business Component. DC stands for Data Component. In your StoreLib create a folder called, 'BusinessComponent', then add a class called, 'StoreBc'. 
+Be sure to add the StoreLib interfaces, and the StoreLib Entities here so you code will compile and recognize the POCO/Shape of the ojbects your passing.
+Here is the commented code to add to this class below
+`   private IStoreDC _dc;
 
+        public IStoreDC DataComponent
+        {
+
+            get => _dc ?? (_dc = ObjectFactory.Create<IStoreDC>());
+            // this getter says, if the datacomponent is null, then create the object from the object factory
+            set => _dc = value;
+            // set it to the value of the object
+        }
+
+
+        public async Task<Product[]> GetProductsAsync()
+        {
+
+            //throw new NotImplementedException();
+            var retrieveData = await DataComponent.GetProductsAsync();
+            return retrieveData;
+            // this method is simply waiting for the information from the Data layer and passing it to the client. 
+        }
+    }
+`
+    Remember to create an interface for the StoreBC and add this function to it. Follow the steps for the last interface we built. 
 
 
 
