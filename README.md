@@ -80,6 +80,9 @@ Let's recreate this procedure in a new database for practice.
 In SQL, click on the Database > Programmabiltiy > Stored Procedure 
 Right click on Stored Procedure and from the dropdown, choose Stored Procedure. In the Query Window, You'll see a template to help you get started building your Stored Procedure. The green is comments to help you understand what's happening. It will look like this picture below. 
 ![Stored Procedcure Template](SPTemplate.png)
+
+In the picture below, I have created the function. It is a simple select all method in SQL. The * means all in sql. Basically, the method says to return all of the not null values from the table. I highlighted the entire prodecure and executed it already. Once I did that, I refreshed my object explorer(the column on the left of the screen) to make sure that my new Stored Procedure is working and saved in the correct place. 
+![created stored proceducre](SPCreated.png)
 ### Connecting the Data Layer to SQL
 Now that our inventory is updated in the database, it is time to connect the Data layer to the project. 
 
