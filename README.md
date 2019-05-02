@@ -88,6 +88,8 @@ Now that our inventory is updated in the database, it is time to connect the Dat
 Here's my config below. I have crossed out the server. The servername and the database information are separated by the semicolon(;).
 ![Web Configuration for Data Layer](DCwebConfig.png)
 
+Now it's time to add the code to our Data Layer to establish a connection to our data and and call our Stored Procedure GetProductsAsync.
+
 
 
 
