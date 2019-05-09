@@ -93,11 +93,13 @@ Now it's time to add the code to our Data Layer to establish a connection to our
 Now we need to make our Products POCO In a new project called StoreLib.Entities. This is where we will store the shape our objects. This is a C# Class Project. We are simply setting shape so that the each product row from SQL will transition nicely into our C# program. Make sure all of the fields in the POCO are spelled correctly and have the correct type to correspond to SQL. 
 Add this point, I also added a 'photos' folder to my main project (the one that's listed in bold font). In this folder I added the images that will be use in my project. Your file path needs to match the file path you have stored in SQL so your program knows where to look for the image and thus it is able to display it to the user. Make sure your StoreDC has a reference to your StoreLib.Entities. Otherwise, it will not know to look there for the Product POCO. 
 
-Here is the code and comments for this method in StoreDc. // signifies a comment. 
-There's a few things to keep in mind:
+Below is the code and comments for this method in StoreDc.
+But, there's a few things to keep in mind:
+* // signifies a comment. 
 * Now that we have a method, we need to update our interface with this new method or our project won't compile. 
-So this means, you need to a.) add a reference to the StoreLib.Entities to get the Product POCO and b.) write just the method on the interface. and that's simply adding ` Task<Product[]> GetProductsAsync();` to the interface. 
-StoreDC code below: 
+        * And all we have to do is add, ` Task<Product[]> GetProductsAsync();` to the interface. 
+* Add a reference to the StoreLib.Entities to get the Product POCO 
+**below is the code and comments for the StoreDc **
 `   public async Task<Product[]> GetProductsAsync()
         {
             var sqlConn = new SqlConnection(_connStr);
@@ -145,7 +147,8 @@ StoreDC code below:
 
             return list.ToArray();
         }
-        `
+        ` 
+     
 How that the Data is in our application, we have to pass it up through the layers. The next layer to pass the data to is the StoreLibBC. BC stands for Business Component. DC stands for Data Component. In your StoreLib create a folder called, 'BusinessComponent', then add a class called, 'StoreBc'. 
 Be sure to add the StoreLib interfaces, and the StoreLib Entities here so you code will compile and recognize the POCO/Shape of the ojbects your passing.
 Here is the commented code to add to this class below
@@ -175,13 +178,14 @@ public class StoreBC
         }
     }
  }
-`` `
-    Remember to create an interface for the StoreBC and add this function to it. Follow the steps for the last interface we built. 
+`
+    Remember to create an interface for the StoreBC and add this function to it. Just as we did last time! 
     
-    Now we need to tranfer the data from the Business Component to the VMC. When we transfer our information here, we will map over the objects in the array and make sure each object is in our View Model. So we have to:
-    Create our function in the VMC to map over the objects - create an interface to correspond to this. 
-    Create VM POCOS so each one is in the right shape
-    Make sure our VMC has the right references to the object POCOS and so on. 
+    Now we need to tranfer the data from the Business Component to the VMC(View Model Controller). When we transfer our information here, we will map over the objects in the array and make sure each object is in our View Model and in the right shape to be viewed. So we have to:
+   * Create our function in the VMC to map over the objects 
+   * Create an interface to correspond to this. 
+   *  Create VM POCOS so each one is in the right shape
+   * Make sure our VMC has the right references to the object POCOS and so on. 
 
 
 
