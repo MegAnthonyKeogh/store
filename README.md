@@ -180,14 +180,13 @@ public class StoreBC
  }
 `
     Remember to create an interface for the StoreBC and add this function to it. Just as we did last time! 
-    
-    Now we need to tranfer the data from the Business Component to the VMC(View Model Controller). When we transfer our information here, we will map over the objects in the array and make sure each object is in our View Model and in the right shape to be viewed. So we have to:
-   * Create our function in the VMC to map over the objects 
+   Now we need to tranfer the data from the Business Component to the VMC(View Model Controller). When we transfer our information here, we will map over the objects in the array and make sure each object is in our View Model and in the right shape to be viewed. So we have to:
+   * Create our function in the VMC to map over the objects
    * Create an interface to correspond to this. 
    *  Create VM POCOS so each one is in the right shape
    * Make sure our VMC has the right references to the object POCOS and so on. 
 
-
+Let's make the view model POCO first. Under the StoreLib project, make a file called, "Models". In there make a class called ProductVM. 
 
 
 
