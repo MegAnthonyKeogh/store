@@ -188,7 +188,10 @@ public class StoreBC
 
 Let's make the view model POCO first. Under the StoreLib project, make a file called, "Models". In there make a class called ProductVM.
 ![ProductVM POCO](ProductVmPoco.png)
-
+Another easy task to get done is setting up your VMC interface. Go to the Interfaces folder and add an interface (just like we did previously).
+Now, let's add references to both our StoreLib.Entities (to get our ProductVM POCO) and StoreLib.Interface
+Highlight the interface with the class by added `: VMC ` after public class VMC
+Now we are going to create two functions (because it is easier to maintain and test single responsiblity code) to get our objects ready to be displayed. 
 
 
 
