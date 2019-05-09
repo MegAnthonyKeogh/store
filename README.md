@@ -186,7 +186,8 @@ public class StoreBC
    *  Create VM POCOS so each one is in the right shape
    * Make sure our VMC has the right references to the object POCOS and so on. 
 
-Let's make the view model POCO first. Under the StoreLib project, make a file called, "Models". In there make a class called ProductVM. 
+Let's make the view model POCO first. Under the StoreLib project, make a file called, "Models". In there make a class called ProductVM.
+![ProductVM POCO](ProductVmPoco.png)
 
 
 
