@@ -191,6 +191,8 @@ Let's make the view model POCO first. Under the StoreLib project, make a file ca
 Another easy task to get done is setting up your VMC interface. Go to the Interfaces folder and add an interface (just like we did previously).
 Now, let's add references to both our StoreLib.Entities (to get our ProductVM POCO) and StoreLib.Interface
 Highlight the interface with the class by added `: VMC ` after public class VMC
+**Remember to add the function you're awaiting from the StoreBc layer to your IStoreBc interface. Without that, you won't be able to create the contract from the Business Component to the VMC. Otherwise, you will not see the method extension off the object. **
+
 Now we are going to create two functions (because it is easier to maintain and test single responsiblity code) to get our objects ready to be displayed. 
 
 
